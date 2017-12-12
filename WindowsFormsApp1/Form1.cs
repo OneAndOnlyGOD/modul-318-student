@@ -20,6 +20,8 @@ namespace WindowsFormsApp1
             dgvStationboard.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvPlan.Visible = false;
             dgvStationboard.Visible = false;
+            dgvPlan.BackgroundColor = Color.White;
+            dgvStationboard.BackgroundColor = Color.White;
             listStart.Visible = false;
             listZiel.Visible = false;
             listStationBoard.Visible = false;
@@ -63,7 +65,6 @@ namespace WindowsFormsApp1
                 txtStart.Focus();
             }
         }
-
 
         private void txtStart_TextChanged(object sender, EventArgs e)
         {
@@ -134,6 +135,7 @@ namespace WindowsFormsApp1
 
             listStart.Visible = false;
             listZiel.Visible = false;
+
             _changed = false;
         }
 
@@ -209,14 +211,68 @@ namespace WindowsFormsApp1
             }
         }
 
-        //private void txtStart_Leave(object sender, EventArgs e)
-        //{
-        //        listStart.Visible = false;
-        //}
+        private void txtStart_Leave(object sender, EventArgs e)
+        {
+            //listStart.Visible = false;
+        }
 
-        //private void txtZiel_Leave(object sender, EventArgs e)
-        //{
-        //        listZiel.Visible = false;
-        //}
+        private void txtZiel_Leave(object sender, EventArgs e)
+        {
+            //listZiel.Visible = false;
+        }
+
+        private void btnMapZiel_Click(object sender, EventArgs e)
+        {
+            if (!(txtZiel.Text == ""))
+            {
+                var station = txtZiel.Text;
+                string adresse = "https://www.google.ch/maps/place/" + station.ToString();
+                System.Diagnostics.Process.Start(adresse);
+            }
+            else
+            {
+                MessageBox.Show("Kein Ort eingegeben!", "OK");
+            }
+        }
+
+        private void btnMapStart_Click(object sender, EventArgs e)
+        {
+            if (!(txtStart.Text == ""))
+            {
+                var station = txtStart.Text;
+                string adresse = "https://www.google.ch/maps/place/" + station.ToString();
+                System.Diagnostics.Process.Start(adresse);
+            }
+            else
+            {
+                MessageBox.Show("Kein Ort eingegeben!", "OK");
+            }
+        }
+
+        private void txtStart_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyData == Keys.Tab)
+            {
+                listStart.Visible = false;
+            }
+            if (e.KeyData == (Keys.Tab | Keys.Shift))
+            {
+                listZiel.Visible = false;
+            }
+        }
+
+        private void tabConnection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtStart.Text = "";
+            txtZiel.Text = "";
+            txtStation.Text = "";
+            dgvPlan.Visible = false;
+            dgvStationboard.Visible = false;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
